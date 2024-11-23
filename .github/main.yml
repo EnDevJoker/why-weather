@@ -1,13 +1,14 @@
-  name: why-weather
+name: why-weather
 
-  on:
+on:
     push:
         branches: [main]
-    pull_request: [main]
+      pull_request: 
+        branches: [main]
 
-        workflow_dispatch:
+      workflow_dispatch:
 
-    jobs: 
+  jobs: 
       build:
           runs-on: ubuntu-latest  
           steps:
