@@ -1,30 +1,31 @@
-  name: why-weather
+name: why-weather
 
-  on:
+on:
     push:
         branches: [main]
-    pull_request: [main]
+    pull_request: 
+        branches: [main]
 
-        workflow_dispatch:
+    workflow_dispatch:
 
-    jobs: 
+jobs: 
       build:
           runs-on: ubuntu-latest  
           steps:
-          - name: Build
+              - name: Build
             run: echo "Building..."
 
     
     # deploy desenvolimento
-    deploy-development:
+deploy-development:
       runs-on: ubuntu-latest
       environment:
-      name: development
-      url: ${{vars.URL}}
+        name: development
+        url: ${{vars.URL}}
       needs: build
       steps:
       - name: Repo Checkout
-      uses: actions/checkout@v1
+        uses: actions/checkout@v1
       - name: Hostinger Deployment
       uses: easingthemes/ssh-deploy@main
       with: 
@@ -36,16 +37,16 @@
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.REMOTE_TARGET}}
 
-          # deploy staging
-    deploy-development:
+    # deploy staging
+deploy-staging:
       runs-on: ubuntu-latest
       environment:
-      name: staging
-      url: ${{vars.URL}}
+        name: staging
+        url: ${{vars.URL}}
       needs: deploy-development
       steps:
       - name: Repo Checkout
-      uses: actions/checkout@v1
+        uses: actions/checkout@v1
       - name: Hostinger Deployment
       uses: easingthemes/ssh-deploy@main
       with: 
@@ -58,15 +59,15 @@
           TARGET: ${{vars.REMOTE_TARGET}}
 
             # deploy production
-    deploy-development:
+deploy-production:
       runs-on: ubuntu-latest
       environment:
-      name: production
-      url: ${{vars.URL}}
+        name: production
+        url: ${{vars.URL}}
       needs: deploy-development
       steps:
       - name: Repo Checkout
-      uses: actions/checkout@v1
+        uses: actions/checkout@v1
       - name: Hostinger Deployment
       uses: easingthemes/ssh-deploy@main
       with: 
@@ -77,5 +78,4 @@
           REMOTE_USER: ${{vars.REMOTE_USER}}
           REMOTE_PORT: ${{vars.REMOTE_PORT}}
           TARGET: ${{vars.REMOTE_TARGET}}
-
 
